@@ -1,0 +1,41 @@
+{
+    "fill-in-the-blanks": [
+      {
+        "answer_explanation": "content",
+        "correct_option": "1",
+        "options": [
+          {
+            "option_id": "1",
+            "option_value": "lonely"
+          }
+        ],
+        "question": "Taro lived with his mother and father on a ______ hillside.",
+        "question_id": "1"
+      }
+    ],
+    "mcqs": [
+      {
+        "answer_explanation": "Folk tales are described as popular stories passed on in spoken form from one generation to the next in the chapter.",
+        "correct_option": "1",
+        "mcq_id": "1",
+        "options": [
+          {
+            "option_id": "1",
+            "option_value": "Folk tales"
+          },
+          {
+           "multiple options" : ""
+          }
+        ],
+        "question": "the question?"
+      }
+    ],
+    "qnas": [
+      {
+        "answer": "the answer.",
+        "question": "the question?",
+        "question_id": "1"
+      }
+    ],
+    "summary": "the summary with '\n' escape seqeuence character at appropriate places"
+  }

@@ -1,0 +1,17 @@
+/* Custom overrides for landing page */
+.hero-section {
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  }
+  
+  .testimonial-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(4px);
+  }
+  
+  .footer-links a {
+    transition: color 0.2s ease-in-out;
+  }
+  
+  .footer-links a:hover {
+    color: #60a5fa;
+  }
