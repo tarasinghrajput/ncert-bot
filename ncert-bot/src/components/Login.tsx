@@ -70,7 +70,7 @@ const Login = () => {
 
         <p className="mt-4 text-center">
           {isSignup ? "Already have an account?" : "Don't have an account?"}
-          <button onClick={() => setIsSignup(!isSignup)} className="text-blue-500 hover:underline ml-1">
+          <button  onClick={() => setIsSignup(!isSignup)}  className="text-blue-500 hover:underline ml-1">
             {isSignup ? "Login" : "Sign Up"}
           </button>
         </p>
