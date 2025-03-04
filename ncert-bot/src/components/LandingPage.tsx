@@ -1,8 +1,10 @@
 import { BookOpenIcon, ClockIcon, DocumentTextIcon } from '@heroicons/react/24/outline';
+import { useAuth } from '../contexts/authContext/AuthContext';
 import { Link } from 'react-router-dom';
 
 
 const LandingPage = () => {
+  const { userLoggedIn } = useAuth();
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Navigation */}
@@ -17,9 +19,11 @@ const LandingPage = () => {
               <a href="/contact" className="text-gray-600 hover:text-blue-600">Contact</a>
             </div>
           </div>
-          <Link to="/login">
-          <button className="bg-white text-blue-600 px-8 py-3 rounded-lg text-lg font-semibold hover:bg-gray-100 ml-4">Login</button>
-          </Link>
+          {/* {userLoggedIn && (
+            <Link to="/login">
+              <button className="bg-white text-blue-600 px-8 py-3 rounded-lg text-lg font-semibold hover:bg-gray-100 ml-4">Login</button>
+            </Link>
+          )} */}
         </div>
       </nav>
 
@@ -28,16 +32,26 @@ const LandingPage = () => {
         <div className="max-w-7xl mx-auto px-4 text-center">
           <h1 className="text-4xl md:text-6xl font-bold mb-6">Master Your Studies with NCERT-BOT Expertise</h1>
           <p className="text-xl mb-8">Interactive activities, personalized questions, and AI-powered Learning</p>
+          {userLoggedIn ? (
           <a href="ProductListing.tsx">
             <Link to="/products">
-          <button className="bg-white text-blue-600 px-8 py-3 rounded-lg text-lg font-semibold hover:bg-gray-100">
-            GET STARTED
-          </button>
-          </Link>
+              <button className="bg-white text-blue-600 px-8 py-3 rounded-lg text-lg font-semibold hover:bg-gray-100">
+                GET STARTED
+              </button>
+            </Link>
           </a>
+          ) : (
+            <a href="Signup.tsx">
+              <Link to="/signup">
+                <button className="bg-white text-blue-600 px-8 py-3 rounded-lg text-lg font-semibold hover:bg-gray-100">
+                  GET STARTED
+                </button>
+              </Link>
+            </a>
+            )}
         </div>
       </div>
-  
+
 
 
       {/* Features Section */}
@@ -48,7 +62,7 @@ const LandingPage = () => {
             <h3 className="text-xl font-semibold mb-2">Best PDF Summarizer</h3>
             <p className="text-gray-600">Top 100% of our PDF will be summarised in every given form.</p>
           </div>
-          
+
           <div className="bg-white p-6 rounded-xl shadow-sm">
             <ClockIcon className="h-12 w-12 text-blue-600 mb-4" />
             <h3 className="text-xl font-semibold mb-2">Save Time</h3>
@@ -109,9 +123,9 @@ const LandingPage = () => {
 
             <div>
               <h5 className="font-semibold mb-4">Address</h5>
-              <p className="text-sm">90 feet road, Pragati nagar Nallasopara-East<br/>
-              Classroom book library<br/>
-              Number: 000001</p>
+              <p className="text-sm">90 feet road, Pragati nagar Nallasopara-East<br />
+                Classroom book library<br />
+                Number: 000001</p>
             </div>
 
             <div>
@@ -120,7 +134,7 @@ const LandingPage = () => {
               <p className="text-sm mt-2">Powered by your@cab.net | Industry</p>
             </div>
           </div>
-          
+
           <div className="border-t border-gray-700 mt-8 pt-8 text-center">
             <p>Copyright © 2024 Saurav Singh reserved</p>
           </div>
