@@ -1,45 +1,28 @@
 import { BookOpenIcon, ClockIcon, DocumentTextIcon } from '@heroicons/react/24/outline';
 import { useAuth } from '../contexts/authContext/AuthContext';
 import { Link } from 'react-router-dom';
+import Header from "./Header";
 
 
 const LandingPage = () => {
   const { userLoggedIn } = useAuth();
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Navigation */}
-      <nav className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-          <div className="flex items-center space-x-8">
-            <span className="text-2xl font-bold text-blue-600">NCERT-BOT</span>
-            <div className="hidden md:flex space-x-6">
-              <a href="/" className="text-gray-600 hover:text-blue-600">Home</a>
-              <a href="/courses" className="text-gray-600 hover:text-blue-600">All Courses</a>
-              <a href="/about" className="text-gray-600 hover:text-blue-600">About Us</a>
-              <a href="/contact" className="text-gray-600 hover:text-blue-600">Contact</a>
-            </div>
-          </div>
-          {/* {userLoggedIn && (
-            <Link to="/login">
-              <button className="bg-white text-blue-600 px-8 py-3 rounded-lg text-lg font-semibold hover:bg-gray-100 ml-4">Login</button>
-            </Link>
-          )} */}
-        </div>
-      </nav>
-
+      
+      <Header />
       {/* Hero Section */}
       <div className="bg-blue-600 text-white py-16">
         <div className="max-w-7xl mx-auto px-4 text-center">
           <h1 className="text-4xl md:text-6xl font-bold mb-6">Master Your Studies with NCERT-BOT Expertise</h1>
           <p className="text-xl mb-8">Interactive activities, personalized questions, and AI-powered Learning</p>
           {userLoggedIn ? (
-          <a href="ProductListing.tsx">
-            <Link to="/products">
-              <button className="bg-white text-blue-600 px-8 py-3 rounded-lg text-lg font-semibold hover:bg-gray-100">
-                GET STARTED
-              </button>
-            </Link>
-          </a>
+            <a href="ProductListing.tsx">
+              <Link to="/products">
+                <button className="bg-white text-blue-600 px-8 py-3 rounded-lg text-lg font-semibold hover:bg-gray-100">
+                  GET STARTED
+                </button>
+              </Link>
+            </a>
           ) : (
             <a href="Signup.tsx">
               <Link to="/signup">
@@ -48,7 +31,7 @@ const LandingPage = () => {
                 </button>
               </Link>
             </a>
-            )}
+          )}
         </div>
       </div>
 

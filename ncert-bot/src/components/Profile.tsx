@@ -57,7 +57,9 @@ const Profile = () => {
 
   return (
     <div className="max-w-2xl mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Your Profile</h1>
+      <h1 className="text-2xl font-bold mb-4">
+        {profile.displayName ? profile.displayName : "Your Profile"}
+      </h1>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label className="block mb-2">Display Name</label>
@@ -80,7 +82,7 @@ const Profile = () => {
 
         <button
           type="submit"
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          className="bg-sky-500 text-black px-4 py-2 rounded hover:bg-blue-700"
         >
           Save Profile
         </button>
