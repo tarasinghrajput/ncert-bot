@@ -147,7 +147,7 @@ useEffect(() => {
       productId,
       score,
       totalQuestions,
-      bookData.summary[0]?.split('\n')[0] || 'Untitled PDF' // Use first summary line as title
+      pdfUrl.split('/').pop() || 'Untitled PDF' // Use first summary line as title
     );
 
     if (success) {
