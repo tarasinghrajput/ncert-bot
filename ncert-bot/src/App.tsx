@@ -4,6 +4,7 @@ import LandingPage from "./components/LandingPage";
 import ProductListing from "./components/ProductListing";
 import ProductPage from "./components/ProductPage";
 import Login from "./components/Login";
+import './App.css'
 import Signup from "./components/Signup";  // Import Signup component
 import { useAuth } from "./contexts/authContext/AuthContext";
 
