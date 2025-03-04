@@ -7,6 +7,7 @@ import Login from "./components/Login";
 import './App.css'
 import Signup from "./components/Signup";  // Import Signup component
 import { useAuth } from "./contexts/authContext/AuthContext";
+import Plans from "./components/Plans";
 
 function App() {
     const { userLoggedIn } = useAuth();
@@ -21,6 +22,8 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />  {/* New Signup Route */}
                 <Route path="*" element={<div>404 Not Found</div>} />
+                <Route path="/" element={<LandingPage />} />
+                <Route path="/plans" element={<Plans />} />
             </Routes>
         </Router>
     );

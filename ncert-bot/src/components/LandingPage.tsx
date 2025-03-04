@@ -29,7 +29,7 @@ const LandingPage = () => {
           <h1 className="text-4xl md:text-6xl font-bold mb-6">Master Your Studies with NCERT-BOT Expertise</h1>
           <p className="text-xl mb-8">Interactive activities, personalized questions, and AI-powered Learning</p>
           <a href="ProductListing.tsx">
-            <Link to="/products">
+            <Link to="/plans">
           <button className="bg-white text-blue-600 px-8 py-3 rounded-lg text-lg font-semibold hover:bg-gray-100">
             GET STARTED
           </button>
