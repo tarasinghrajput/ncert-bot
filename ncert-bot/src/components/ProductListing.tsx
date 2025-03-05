@@ -6,8 +6,8 @@ const ProductListing = () => {
   // Sample data - replace with actual data from your backend/API
   const [pdfs] = useState<PDFBook[]>([
     { id: 1, subject: 'English', grade: 'Class 6', year: '2023', pdfUrl: '/pdf/6th-English-NCERT-Chapter-3.pdf' },
-    { id: 2, subject: 'Science', grade: 'Class 7', year: '2023', pdfUrl: '/pdf/7th-Science-NCERT-Chapter-1.pdf' },
-    { id: 3, subject: 'Mathematics', grade: 'Class 5', year: '2023', pdfUrl: '/pdf/5th-Maths-NCERT-Chapter-2.pdf' },
+    // { id: 2, subject: 'Science', grade: 'Class 7', year: '2023', pdfUrl: '/pdf/7th-Science-NCERT-Chapter-1.pdf' },
+    // { id: 3, subject: 'Mathematics', grade: 'Class 5', year: '2023', pdfUrl: '/pdf/5th-Maths-NCERT-Chapter-2.pdf' },
     // Add more entries as needed
   ]);
 

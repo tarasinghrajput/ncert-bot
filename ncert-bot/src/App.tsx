@@ -1,28 +1,28 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import LandingPage from './components/LandingPage';
-import ProductListing from './components/ProductListing';
-import ProductPage from './components/ProductPage'; 
-import './App.css'
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import LandingPage from "./components/LandingPage";
+import ProductListing from "./components/ProductListing";
+import ProductPage from "./components/ProductPage";
 import Login from "./components/Login";
+import Signup from "./components/Signup.jsx";  // Import Signup component
+import { useAuth } from "./contexts/authContext/AuthContext";
 
 function App() {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/products" element={<ProductListing />} />
-        {/* <Route path="/products/:productId/" element={<ProductPage />} /> */}
-        <Route path="/products/:productId/" element={<ProductPage />} />
-        {/* A catch-all route for invalid URLs */}
-        <Route path="/" element={<Navigate to="/products" replace />} />
-        <Route path="*" element={<div>404 Not Found</div>} />
-        <Route path="/login" element={<Login />} /> {/* Add the login page */}
-      </Routes>
-    </Router>
-  );
+    const { userLoggedIn } = useAuth();
+
+    return (
+        <Router>
+            <Routes>
+                {/* Redirect to login if not authenticated */}
+                <Route path="/" element={userLoggedIn ? <LandingPage /> : <Navigate to="/login" />} />
+                <Route path="/products" element={userLoggedIn ? <ProductListing /> : <Navigate to="/login" />} />
+                <Route path="/products/:productId/" element={userLoggedIn ? <ProductPage /> : <Navigate to="/login" />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<Signup />} />  {/* New Signup Route */}
+                <Route path="*" element={<div>404 Not Found</div>} />
+            </Routes>
+        </Router>
+    );
 }
 
-
-
-export default App
+export default App;

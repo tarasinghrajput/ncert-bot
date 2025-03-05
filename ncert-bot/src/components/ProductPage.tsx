@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+// import { getFirestore, doc, setDoc, arrayUnion } from 'firebase/firestore';
+// import { getAuth } from 'firebase/auth';
 import { Link, useParams, useLocation } from 'react-router-dom';
 import { ChevronRightIcon } from '@heroicons/react/24/outline';
 import { BookData } from '../types';
@@ -86,7 +88,6 @@ const toggleQna = (questionId: string) => {
 
 
 
-
     if (!productId || !pdfUrl) {
         return <div>PDF not found</div>;
     }
@@ -103,7 +104,7 @@ const toggleQna = (questionId: string) => {
     const product = {
         id: productId,
         title: 'English Class 4',
-        pdfUrl: '/pdf/english-fourth.pdf',
+        pdfUrl: '/pdf/6th-English-NCERT-Chapter-3.pdf',
         summary: 'Comprehensive guide to Class 4 English...',
         mcq: [
             { question: 'What is the value of π?', options: ['3.14', '22/7', 'Both', 'None'], answer: 2 },
