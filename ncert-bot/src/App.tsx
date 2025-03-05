@@ -4,7 +4,12 @@ import LandingPage from "./components/LandingPage";
 import ProductListing from "./components/ProductListing";
 import ProductPage from "./components/ProductPage";
 import Login from "./components/Login";
+<<<<<<< HEAD
 import Signup from "./components/Signup.jsx";  // Import Signup component
+=======
+import './App.css'
+import Signup from "./components/Signup";  // Import Signup component
+>>>>>>> e000ee9 (signup and login working)
 import { useAuth } from "./contexts/authContext/AuthContext";
 
 function App() {
