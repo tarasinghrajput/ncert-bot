@@ -14,7 +14,7 @@ function Signup() {
         setError("");
         try {
             await createUserWithEmailAndPassword(auth, email, password);
-            navigate("/"); // Redirect to home after signup
+            navigate("/checkout"); // Redirect to checkout after signup
         } catch (error) {
             let errorMessage = "An unknown error occurred";
 

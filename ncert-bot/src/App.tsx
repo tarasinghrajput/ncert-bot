@@ -9,6 +9,9 @@ import Profile from "./components/Profile"
 import { useAuth } from './contexts/authContext/AuthContext';
 import './App.css'
 import Signup from "./components/Signup";  // Import Signup component
+import PaymentSuccess from "./components/PaymentSuccess";
+import PaymentFailed from "./components/PaymentFailed";
+import Checkout from "./components/Checkout";
 
 function App() {
     const { userLoggedIn } = useAuth();
@@ -18,7 +21,10 @@ function App() {
             <Routes>
                 {/* Redirect to login if not authenticated */}
                 <Route path="/login" element={<Login />} />
-                <Route path="/signup" element={<Signup />} />  
+                <Route path="/signup" element={<Signup />} />
+
+                <Route path="/success" element={<PaymentSuccess />} />
+                <Route path="/failed" element={<PaymentFailed />} />
 
                 {/* Protected routes */}
                 <Route element={<ProtectedRoute />}>
@@ -30,6 +36,8 @@ function App() {
 
                 <Route path="/" element={<LandingPage />} /> {/* Default Route */}
                 <Route path="*" element={<div>404 Not Found</div>} />
+                
+                <Route path="/checkout" element={<Checkout />} />
             </Routes>
         </Router>
     );
