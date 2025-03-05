@@ -40,3 +40,17 @@ export interface BookData {
   "fill-in-the-blanks": FillInBlank[];
   qnas: QnA[];
 }
+
+export interface UserScore {
+  pdfId: string;
+  pdfTitle: string;
+  highestScore: number;
+  attempts: ScoreData[];
+  lastAttempt: Date;
+}
+
+export interface ScoreData {
+  score: number;
+  totalQuestions: number;
+  timestamp: Date;
+}

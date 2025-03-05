@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { auth } from "../firebase/firebase"; // Ensure Firebase is correctly imported
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
@@ -9,14 +9,26 @@ function Signup() {
     const [error, setError] = useState("");
     const navigate = useNavigate();
 
-    const handleSignup = async (e) => {
+    const handleSignup = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
         setError("");
         try {
             await createUserWithEmailAndPassword(auth, email, password);
             navigate("/"); // Redirect to home after signup
-        } catch (err) {
-            setError(err.message);
+        } catch (error) {
+            let errorMessage = "An unknown error occurred";
+
+            if (error instanceof Error) {
+                errorMessage = error.message;
+            }
+
+            // For Firebase specific errors
+            if (typeof error === 'object' && error !== null && 'code' in error) {
+                errorMessage = `Firebase Error: ${error.code}`;
+            }
+
+            console.error("Signup failed:", errorMessage);
+            setError(errorMessage);
         }
     };
 
