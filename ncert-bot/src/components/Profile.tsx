@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '../contexts/authContext/AuthContext';
-import { getFirestore, doc, getDoc, setDoc, collection, getDocs } from 'firebase/firestore';
+import { getFirestore, doc, getDoc, setDoc, collection, getDocs, query, orderBy, limit } from 'firebase/firestore';
 import { app } from '../firebase/firebase';
 import { ChevronRightIcon } from '@heroicons/react/24/outline';
 import { Link, useNavigate } from 'react-router-dom';
@@ -70,7 +70,7 @@ const Profile = () => {
           if (profileSnap.exists()) {
             setProfile(profileSnap.data() as ProfileData);
           }
-
+  
           // Fetch scores
           const scoresRef = collection(db, `users/${currentUser.uid}/scores`);
           const scoresSnap = await getDocs(scoresRef);
@@ -80,7 +80,7 @@ const Profile = () => {
             calculatedTotal += scoreData.highestScore;
           });
           setTotalScore(calculatedTotal);
-
+  
           // Fetch subscription
           const subRef = doc(db, 'users', currentUser.uid, 'subscriptions', 'active');
           const subSnap = await getDoc(subRef);
@@ -92,7 +92,7 @@ const Profile = () => {
               expiresAt: data.expiresAt.toDate()
             });
           }
-
+  
           // Fetch daily traffic
           const trafficRef = collection(db, `users/${currentUser.uid}/dailyTraffic`);
           const trafficSnap = await getDocs(trafficRef);
@@ -101,19 +101,17 @@ const Profile = () => {
             trafficData.push({ date: doc.id, count: doc.data().count });
           });
           setDailyTraffic(trafficData);
-
-          // Fetch most used book
+  
+          // Fetch most used book (optimized query)
           const bookUsageRef = collection(db, `users/${currentUser.uid}/bookUsage`);
-          const bookUsageSnap = await getDocs(bookUsageRef);
+          const bookUsageQuery = query(bookUsageRef, orderBy('count', 'desc'), limit(1));
+          const bookUsageSnap = await getDocs(bookUsageQuery);
           let mostUsed: BookUsage | null = null;
           bookUsageSnap.forEach(doc => {
-            const bookData = doc.data() as BookUsage;
-            if (!mostUsed || bookData.count > mostUsed.count) {
-              mostUsed = { bookId: doc.id, count: bookData.count };
-            }
+            mostUsed = { bookId: doc.id, count: doc.data().count };
           });
           setMostUsedBook(mostUsed);
-
+  
           // Fetch feedback
           const feedbackRef = collection(db, `users/${currentUser.uid}/feedback`);
           const feedbackSnap = await getDocs(feedbackRef);
@@ -133,7 +131,7 @@ const Profile = () => {
         }
       }
     };
-
+  
     fetchData();
   }, [currentUser, db]);
 
@@ -210,7 +208,7 @@ const Profile = () => {
         <h3 className="text-lg font-semibold text-green-800">Daily Traffic</h3>
         <ul className="mt-2">
           {dailyTraffic.map((traffic, index) => (
-            <li key={index} className="text-gray-700">
+            <li key={index} className="text-black-700">
               {traffic.date}: {traffic.count} visits
             </li>
           ))}
@@ -222,11 +220,11 @@ const Profile = () => {
         <h3 className="text-lg font-semibold text-yellow-800">Most Used Book</h3>
         {mostUsedBook ? (
           <p className="mt-2 text-gray-700">
-            Book ID: {mostUsedBook.bookId} (Used {mostUsedBook.count} times)
+              Book ID: {mostUsedBook.bookId} (Used {mostUsedBook.count} times)
           </p>
-        ) : (
+          ) : (
           <p className="mt-2 text-gray-700">No book usage data available.</p>
-        )}
+          )}
       </div>
 
       {/* Feedback */}

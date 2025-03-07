@@ -1,9 +1,12 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { PDFBook } from '../types';
+import { getFirestore, doc, setDoc, increment } from 'firebase/firestore';
+import { app } from '../firebase/firebase';
+import { useAuth } from '../contexts/authContext/AuthContext';
 
 const ProductListing = () => {
-  // Sample data - replace with actual data from your backend/API
+  const { currentUser } = useAuth();
   const [pdfs] = useState<PDFBook[]>([
     { id: 1, subject: 'English', grade: 'Class 6', year: '2025', pdfUrl: '/pdf/6th-English-NCERT-Chapter-3.pdf' },
     { id: 2, subject: 'Science', grade: 'Class 7', year: '2025', pdfUrl: '/pdf/7th-Science-NCERT-Chapter-1.pdf' },
@@ -18,31 +21,49 @@ const ProductListing = () => {
     // Add more entries as needed
   ]);
 
-
-  // Filter states
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedSubject, setSelectedSubject] = useState('');
   const [selectedGrade, setSelectedGrade] = useState('');
 
-  // Get unique subjects and grades for filter options
   const subjects = Array.from(new Set(pdfs.map((pdf) => pdf.subject)));
   const grades = Array.from(new Set(pdfs.map((pdf) => pdf.grade)));
 
-  // Filtered PDFs
   const filteredPdfs = pdfs.filter(pdf => {
     const matchesSearch = 
-    pdf.subject.toLowerCase().includes(searchQuery.toLowerCase()) || 
-    pdf.grade.toLowerCase().includes(searchQuery.toLowerCase());
+      pdf.subject.toLowerCase().includes(searchQuery.toLowerCase()) || 
+      pdf.grade.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesSubject = selectedSubject ? pdf.subject === selectedSubject : true;
     const matchesGrade = selectedGrade ? pdf.grade === selectedGrade : true;
     
     return matchesSearch && matchesSubject && matchesGrade;
   });
 
+  // Function to handle book click
+  console.log('Current User:', currentUser); 
+
+  const handleBookClick = async (pdfId: number) => {
+    if (!currentUser) {
+      console.error('No current user found.');
+      return;
+    }
+  
+    const db = getFirestore(app);
+    const bookUsageRef = doc(db, `users/${currentUser.uid}/bookUsage`, pdfId.toString());
+  
+    try {
+      console.log(`Updating book usage for book ID: ${pdfId}`);
+      await setDoc(bookUsageRef, {
+        count: increment(1)
+      }, { merge: true });
+      console.log('Book usage updated successfully.');
+    } catch (error) {
+      console.error('Error updating book usage:', error);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 p-8">
       <div className="max-w-7xl mx-auto flex gap-8">
-        {/* Left Side - PDF Listings */}
         <div className="flex-1">
           <h1 className="text-3xl font-bold text-gray-800 mb-8">NCERT Books & Resources</h1>
           
@@ -51,14 +72,19 @@ const ProductListing = () => {
               <div 
                 key={pdf.id} 
                 className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
-                >
+              >
                 <div className="flex items-center justify-between">
-                  <Link to={`/products/${pdf.id}`} state={{ pdfUrl: pdf.pdfUrl }} className="view-button">
-                  <div>
-                    <h3 className="text-xl font-semibold text-gray-800">{pdf.subject}</h3>
-                    <p className="text-gray-600">{pdf.grade}</p>
-                    <p className="text-sm text-gray-500 mt-2">Academic Year: {pdf.year}</p>
-                  </div>
+                  <Link 
+                    to={`/products/${pdf.id}`} 
+                    state={{ pdfUrl: pdf.pdfUrl }} 
+                    className="view-button"
+                    onClick={() => handleBookClick(pdf.id)}
+                  >
+                    <div>
+                      <h3 className="text-xl font-semibold text-gray-800">{pdf.subject}</h3>
+                      <p className="text-gray-600">{pdf.grade}</p>
+                      <p className="text-sm text-gray-500 mt-2">Academic Year: {pdf.year}</p>
+                    </div>
                   </Link>
                 </div>
               </div>
@@ -66,12 +92,10 @@ const ProductListing = () => {
           </div>
         </div>
 
-        {/* Right Side - Filters */}
         <div className="w-80 shrink-0">
           <div className="bg-white p-6 rounded-lg shadow-md sticky top-8">
             <h2 className="text-xl font-semibold mb-6">Filter Resources</h2>
             
-            {/* Search Input */}
             <div className="mb-6">
               <label className="block text-sm font-medium text-gray-700 mb-2">Search</label>
               <input
@@ -83,7 +107,6 @@ const ProductListing = () => {
               />
             </div>
 
-            {/* Subject Filter */}
             <div className="mb-6">
               <label className="block text-sm font-medium text-gray-700 mb-2">Subject</label>
               <select
@@ -98,7 +121,6 @@ const ProductListing = () => {
               </select>
             </div>
 
-            {/* Grade Filter */}
             <div className="mb-6">
               <label className="block text-sm font-medium text-gray-700 mb-2">Grade</label>
               <select
@@ -113,7 +135,6 @@ const ProductListing = () => {
               </select>
             </div>
 
-            {/* Reset Filters */}
             <button
               onClick={() => {
                 setSearchQuery('');
